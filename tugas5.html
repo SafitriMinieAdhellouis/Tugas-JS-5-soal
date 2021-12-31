@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        table,td {
+            background-color: mediumpurple;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        #tab{
+            visibility: hidden;
+        }
+        input {
+            width: 100px;
+            outline: none;
+        }
+
+        #center {
+            text-align: center;
+        }
+
+        span {
+            color: red; 
+            font-style: italic;
+            /* visibility: hidden; */
+        }
+        
+        b {
+            color: red;
+        }
+
+        #delete {
+            border: none;
+            padding: 6px;
+            border-radius: 5px;
+            background-color: mediumvioletred;
+            width: 34px;
+            height: 34px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <form id="frm">    -->
+    <table>
+        <tr>
+            <td><label for="nama">Nama Pengguna<b>*</b></label></td>
+            <td>:</td>
+            <td><input type="text" id="nama"></td>
+            <td><span></span></td>
+        </tr>
+        <tr>
+            <td><label for="email">Email<b>*</b></label></td>
+            <td>:</td>
+            <td><input type="email" id="email"></td>
+            <td><span></span></td>
+        </tr>
+        <tr>
+            <td><label for="time">Jam Keberangkatan<b>*</b></label></td>
+            <td>:</td>
+            <td><input type="time" id="time"></td>
+            <td><span></span></td>
+        </tr>
+        <tr>
+            <td><label for="tujuan">Tujuan Keberangkatan<b>*</b></label></td>
+            <td>:</td>
+            <td><input type="text" id="tujuan"></td>
+            <td><span></span></td>
+        </tr>
+        <tr>
+            <td><label for="tiket">Jumlah Tiket<b>*</b></label></td>
+            <td>:</td>
+            <td><input type="number" id="tiket" min="1" max="10"></td>
+            <td><span></span></td>
+        </tr>
+        <tr>
+            <td colspan="3" id="center">
+                <button onclick="proses()">Submit</button>
+            </td>
+        </tr>
+    </table><br>
+    <!--</form> -->
+    <table id="tab">
+        <thead>
+            <tr>
+                <th>Nama Pengguna</th>
+                <th>Email</th>
+                <th>Jam Keberangkatan</th>
+                <th>Tujuan Keberangkatan</th>
+                <th>Jumlah Tiket</th>
+            </tr>
+        </thead>
+        <tbody id="hasil">
+        </tbody>
+    </table>
+    <script>
+        let nama, email, time, tujuan, tiket, span, hasil, data, penampung;
+        nama = document.getElementById("nama")
+        email = document.getElementById("email")
+        time = document.getElementById("time")
+        tujuan = document.getElementById("tujuan")
+        tiket = document.getElementById("tiket")
+        span = document.getElementsByTagName("span")
+
+        hasil = document.getElementById("hasil")
+        data = []
+        penampung = ""
+
+        function proses() {
+            if (nama.value == "") {
+                span[0].innerHTML = "eror"
+            }
+            if (email.value == "") {
+                span[1].innerHTML = "eror"
+            }
+            if (time.value == "") {
+                span[2].innerHTML = "eror"
+            }
+            if (tujuan.value == "") {
+                span[3].innerHTML = "eror"
+            }
+            if (tiket.value == "") {
+                span[4].innerHTML = "eror"
+            }
+            if (nama.value && email.value && time.value && tujuan.value && tiket.value) {
+                alert("Data Berhasil di Masukkan")
+                document.getElementById("tab").style.visibility = "visible";
+                data.push([nama.value, email.value, time.value, tujuan.value, tiket.value])
+
+                if (penampung) {
+                    penampung = ""
+                    for (let index = 0; index < data.length; index++) {
+                        penampung += `
+                        <tr>
+                            <td><input type='text' disabled value="${data[index][0]}"></td>
+                            <td><input type='email' disabled value="${data[index][1]}"></td>
+                            <td><input type='time' disabled value="${data[index][2]}"></td>
+                            <td><input type='text' disabled value="${data[index][3]}"></td>
+                            <td><input type='number' disabled value="${data[index][4]}"></td>
+                        </tr>
+                    `
+                    }
+                } else {
+                    for (let index = 0; index < data.length; index++) {
+                        penampung += ` 
+                        <tr>
+                            <td><input type='text' disabled value="${data[index][0]}"></td>
+                            <td><input type='email' disabled value="${data[index][1]}"></td>
+                            <td><input type='time' disabled value="${data[index][2]}"></td>
+                            <td><input type='text' disabled value="${data[index][3]}"></td>
+                            <td><input type='number' disabled value="${data[index][4]}"></td>
+                        </tr>
+                    `
+                    }
+                }
+                //output
+                hasil.innerHTML = penampung
+
+                nama.value = ""
+                email.value = ""
+                time.value = ""
+                tujuan.value = ""
+                tiket.value = ""
+            }
+        }
+
+        // let array = data.length;
+        // function del() {
+
+            // if (hasilNama.value != "" && hasilEmail.value != "" && hasilTime.value != "" && hasilTujuan.value != "" &&
+            //     hasilTiket.value != "") {
+            //     confirm('Delete data..??')
+
+            // }
+        // }
+    </script>
+</body>
+
+</html>
+
